@@ -1,25 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import axios from "axios";
+import React, { useState, useEffect } from "react";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [data, setData] = useState({});
+    const getData = async () => {
+        const response = await axios.get(
+            "https://61b6f23ec95dd70017d410f8.mockapi.io/data/data"
+        );
+        // .then((res) => {
+        //     const myData = res.data;
+        //     console.log(myData);
+        //     setData(myData);
+        // })
+        // .catch((err) => {
+        //     console.log(err);
+        // });
+        const myData = response.data;
+        console.log(myData);
+        setData(myData);
+    };
+
+    useEffect(() => getData(), []);
+    console.log(data["data"]);
+    return (
+        <div className="App">
+            {data["data"]
+                .sort((a, b) => a.id - b.id)
+                .map((item) => {
+                    return (
+                        <ol>
+                            <li>
+                                {item.id} - {item.name}
+                            </li>
+                        </ol>
+                    );
+                })}
+        </div>
+    );
 }
 
 export default App;
