@@ -2,7 +2,7 @@
 
 The app was designed to get data from an API and display it in a clean and easy to read format. (Bonus: Dark Theme!)
 
-the sameple data was hosted at [MockAPI.com](https://www.mockapi.io/).
+the sample data was hosted at [MockAPI.com](https://www.mockapi.io/).
 
 # Image of the app
 
