@@ -1,43 +1,42 @@
 import "./App.css";
-import axios from "axios";
 import React, { useState, useEffect } from "react";
 
 function App() {
-    const [data, setData] = useState({});
-    const getData = async () => {
-        const response = await axios.get(
-            "https://61b6f23ec95dd70017d410f8.mockapi.io/data/data"
-        );
-        // .then((res) => {
-        //     const myData = res.data;
-        //     console.log(myData);
-        //     setData(myData);
-        // })
-        // .catch((err) => {
-        //     console.log(err);
-        // });
-        const myData = response.data;
-        console.log(myData);
-        setData(myData);
-    };
+    const [error, setError] = useState(null);
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [items, setItems] = useState([]);
 
-    useEffect(() => getData(), []);
-    console.log(data["data"]);
-    return (
-        <div className="App">
-            {data["data"]
-                .sort((a, b) => a.id - b.id)
-                .map((item) => {
-                    return (
-                        <ol>
-                            <li>
-                                {item.id} - {item.name}
-                            </li>
-                        </ol>
-                    );
-                })}
-        </div>
-    );
+    useEffect(() => {
+        fetch("https://61b6f23ec95dd70017d410f8.mockapi.io/data/data")
+            .then((res) => res.json())
+            .then(
+                (result) => {
+                    setIsLoaded(true);
+                    setItems(result.data);
+                },
+
+                (error) => {
+                    setIsLoaded(true);
+                    setError(error);
+                }
+            );
+    }, []);
+
+    if (error) {
+        return <div>Error: {error.message}</div>;
+    } else if (!isLoaded) {
+        return <div>Loading...</div>;
+    } else {
+        return (
+            <ol className="gradient-list">
+                {items
+                    .sort((a, b) => a.id - b.id)
+                    .map((item) => (
+                        <li key={item.id}>{item.name}</li>
+                    ))}
+            </ol>
+        );
+    }
 }
 
 export default App;
