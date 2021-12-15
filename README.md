@@ -11,7 +11,7 @@ the sameple data was hosted at [MockAPI.com](https://www.mockapi.io/).
 # Features
 
 <ul>
-    <li>The app uses use state and fetch to get and display data from the API
+    <li>The app uses useState and fetch() to get and display data from the API
     <li>Until the data is fetched, the app displays a loading message
     <li>If an error occurs, the app displays an error message
 </ul>
